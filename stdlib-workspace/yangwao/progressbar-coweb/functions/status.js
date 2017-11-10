@@ -8,8 +8,7 @@ const lib = require('lib')
 module.exports = (n = 'non', context, callback) => {
   const firebase = require('firebase-admin')
 
-  return lib[`${context.service.indetifier}.firebaseConfig`]((err, firebaseConfig) => {
-    console.log(firebaseConfig)
+  return lib[`${context.service.identifier}.firebaseConfig`]((err, firebaseCreds) => {
     if (err) {
       callback(null, {
         code: 'Firebase Error'
@@ -18,7 +17,7 @@ module.exports = (n = 'non', context, callback) => {
 
     if (firebase.apps.length === 0) {
       firebase.initializeApp({
-        credential: firebase.credential.cert(firebaseConfig),
+        credential: firebase.credential.cert(firebaseCreds),
         databaseURL: 'https://coweb-bc478.firebaseio.com'
       })
     }
